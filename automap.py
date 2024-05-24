@@ -1,19 +1,24 @@
 import nmap3
 import time
 
-def print_banner():
+"""
+Global Variables
+"""
+nmap = nmap3.NmapHostDiscovery()
+
+
+def banner():
     print('\r')
-    padding = '  '
 
-    A = [['┌','─','┐'], ['├','─','┤'], ['┴',' ','┴']]
-    U = [['┬',' ','┬'], ['│',' ','│'], ['└','─','┘']]
-    T = [['┬','─','┬'], [' ','│',' '], [' ','┴',' ']]
-    O = [['┌','─','┐'], ['│',' ','│'], ['└','─','┘']]
-    M = [['┐',' ','┌'], ['|','V','|'], ['┴',' ','┴']]
-    P = [['┌','─','┐'], ['├','─','┘'], ['┴',' ',' ']]
+    A = [['┌', '─', '┐'], ['├', '─', '┤'], ['┴', ' ', '┴']]
+    U = [['┬', ' ', '┬'], ['│', ' ', '│'], ['└', '─', '┘']]
+    T = [['┬', '─', '┬'], [' ', '│', ' '], [' ', '┴', ' ']]
+    O1 = [['┌', '─', '┐'], ['│', ' ', '│'], ['└', '─', '┘']]
+    M = [['┐', ' ', '┌'], ['|', 'V', '|'], ['┴', ' ', '┴']]
+    P = [['┌', '─', '┐'], ['├', '─', '┘'], ['┴', ' ', ' ']]
 
-    banner = [A, U, T, O, M, A, P]
-    final = []    
+    banner = [A, U, T, O1, M, A, P]
+    final = []
     init_color = 46
     txt_color = init_color
     cl = 0
@@ -31,40 +36,31 @@ def print_banner():
             txt_color = init_color
 
         init_color += 1
-        if charset < 2: final.append('\n   ')
+        if charset < 2:
+            final.append('\n   ')
 
     print(f"   {''.join(final)}")
 
 
-def banner():
-	print("""
- ______     __  __     ______   ______     __    __     ______     ______  
-/\  __ \   /\ \/\ \   /\__  _\ /\  __ \   /\ "-./  \   /\  __ \   /\  == \ 
-\ \  __ \  \ \ \_\ \  \/_/\ \/ \ \ \/\ \  \ \ \-./\ \  \ \  __ \  \ \  _-/ 
- \ \_\ \_\  \ \_____\    \ \_\  \ \_____\  \ \_\ \ \_\  \ \_\ \_\  \ \_\   
-  \/_/\/_/   \/_____/     \/_/   \/_____/   \/_/  \/_/   \/_/\/_/   \/_/  
-	""")
-
-
 def hacker_text(text, leading_spaces=0):
 
-	text_chars = list(text)
-	current, mutated = '', ''
+    text_chars = list(text)
+    current, mutated = '', ''
 
-	for i in range(len(text)):
-		
-		original = text_chars[i]
-		current += original
-		mutated += f'\033[1;38;5;82m{text_chars[i].upper()}\033[0m'
-		print(f'\r{" " * leading_spaces}{mutated}', end='')
-		time.sleep(0.05)
-		print(f'\r{" " * leading_spaces}{current}', end='')
-		mutated = current
+    for i in range(len(text)):
 
-	print(f'\r{" " * leading_spaces}{text}\n')
+        original = text_chars[i]
+        current += original
+        mutated += f'\033[1;38;5;82m{text_chars[i].upper()}\033[0m'
+        print(f'\r{" " * leading_spaces}{mutated}', end='')
+        time.sleep(0.05)
+        print(f'\r{" " * leading_spaces}{current}', end='')
+        mutated = current
+
+    print(f'\r{" " * leading_spaces}{text}\n')
 
 
-# banner()
-print_banner()
-hacker_text('Enumerate The World', 10)
+banner()
+hacker_text('Enumerare Mundum!', 7)
 
+# def nmap_port_scan
