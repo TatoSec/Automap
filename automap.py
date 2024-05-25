@@ -2,8 +2,6 @@ import subprocess
 from datetime import datetime
 import time
 import re
-import json
-import pyperclip
 
 
 """
