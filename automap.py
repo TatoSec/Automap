@@ -1,10 +1,16 @@
-import nmap3
+import subprocess
+from datetime import datetime
 import time
+import re
+import json
+import pyperclip
+
 
 """
 Global Variables
 """
-nmap = nmap3.NmapHostDiscovery()
+current_time = datetime.now()
+formatted_time = current_time.strftime("%H:%M:%S")
 
 
 def banner():
@@ -60,7 +66,26 @@ def hacker_text(text, leading_spaces=0):
     print(f'\r{" " * leading_spaces}{text}\n')
 
 
+def port_scan():
+    print(f"[+] {formatted_time} | PORT SCAN | {target} |")
+    command = f"sudo nmap -p- --open -sS -vvv --min-rate 5000 {target}"
+    result = subprocess.run(command, shell=True,
+                            capture_output=True, text=True)
+    if result.returncode == 0:
+        # Print the output of the command
+        port_scan_raw = re.compile(r'(\d+)/\w+\s+(?!on)(\w+)\s+(\w+)')
+        service_matches = re.findall(port_scan_raw, result.stdout)
+        for match in service_matches:
+            port, state, service = match
+            print(f"Port: {port}, State: {state}, Service: {service}")
+
+    else:
+        print("Command failed with error code:", result.returncode)
+        # Print the error output
+        print(result.stderr)
+
+
 banner()
 hacker_text('Enumerare Mundum!', 7)
-
-# def nmap_port_scan
+target = input("Target Address: ")
+port_scan()
