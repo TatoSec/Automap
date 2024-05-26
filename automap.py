@@ -96,8 +96,12 @@ PORT   STATE   SERVICE
         # Print the error output
         print(result.stderr)
 
+    """
+    Service Scan [Not Parsed Data]
+    """
+
     print(f"{info} {formatted_time} | SERVICE SCAN | {target}\n")
-    command_2 = "nmap -sCV -p" + (", ".join(ports)) + " -vvv -Pn " + (target)
+    command_2 = "nmap -sCV -p" + (",".join(ports)) + " -vvv " + (target)
     result = subprocess.run(command_2, shell=True,
                             capture_output=True, text=True)
     print(f"{success} SERVICE SCAN RESULTS")
