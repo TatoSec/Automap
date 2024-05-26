@@ -88,7 +88,7 @@ def port_scan():
 PORT   STATE   SERVICE
 {port}     {state}     {service}
 """)
-            
+
         print(scan_delimiter + '┘')
 
     else:
