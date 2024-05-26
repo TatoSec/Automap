@@ -89,12 +89,21 @@ PORT   STATE   SERVICE
 {port}     {state}     {service}
 """)
 
-        print(scan_delimiter + '┘')
+        print(scan_delimiter + '┘\n')
 
     else:
         print("PORT SCAN ERROR:", result.returncode)
         # Print the error output
         print(result.stderr)
+
+    print(f"{info} {formatted_time} | SERVICE SCAN | {target}\n")
+    command_2 = "nmap -sCV -p" + (", ".join(ports)) + " -vvv -Pn " + (target)
+    result = subprocess.run(command_2, shell=True,
+                            capture_output=True, text=True)
+    print(f"{success} SERVICE SCAN RESULTS")
+    print(scan_delimiter + '┐')
+    print(result.stdout)
+    print(scan_delimiter + '┘')
 
 
 banner()
