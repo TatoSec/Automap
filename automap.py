@@ -7,8 +7,12 @@ import re
 """
 Global Variables
 """
+info = '[*]'
+success = '[+]'
+error = '[!]'
 current_time = datetime.now()
 formatted_time = current_time.strftime("%H:%M:%S")
+scan_delimiter = "─" * 21
 
 
 def banner():
@@ -65,7 +69,7 @@ def hacker_text(text, leading_spaces=0):
 
 
 def port_scan():
-    print(f"[+] {formatted_time} | PORT SCAN | {target} |")
+    print(f"{info} {formatted_time} | PORT SCAN | {target}\n")
     command = f"sudo nmap -p- --open -sS -vvv --min-rate 5000 {target}"
     result = subprocess.run(command, shell=True,
                             capture_output=True, text=True)
@@ -73,17 +77,27 @@ def port_scan():
         # Print the output of the command
         port_scan_raw = re.compile(r'(\d+)/\w+\s+(?!on)(\w+)\s+(\w+)')
         service_matches = re.findall(port_scan_raw, result.stdout)
+        print(f"{success} PORT SCAN RESULTS")
+        print(scan_delimiter + '┐')
+        ports = []
         for match in service_matches:
             port, state, service = match
-            print(f"Port: {port}, State: {state}, Service: {service}")
+            ports.append(port)
+            print(
+                f"""
+PORT   STATE   SERVICE
+{port}     {state}     {service}
+""")
+            
+        print(scan_delimiter + '┘')
 
     else:
-        print("Command failed with error code:", result.returncode)
+        print("PORT SCAN ERROR:", result.returncode)
         # Print the error output
         print(result.stderr)
 
 
 banner()
 hacker_text('Enumerare Mundum!', 7)
-target = input("Target Address: ")
+target = input("[?] INSERT TARGET ADDRESS: ")
 port_scan()
